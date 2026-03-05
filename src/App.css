@@ -1,0 +1,433 @@
+/* --- GLOBAL RESET --- */
+body, html { 
+    margin: 0; 
+    padding: 0; 
+    height: 100%; 
+    overflow: hidden; 
+    background: #050510; 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+}
+
+/* --- MAIN LAYOUT --- */
+.app-container { 
+    display: flex; 
+    width: 100vw; 
+    height: 100vh; 
+    overflow: hidden; 
+}
+
+/* --- LEFT SIDE: AVATAR WINDOW --- */
+.avatar-window {
+  flex: 1; 
+  /* Tech Gradient: Deep Blue/Black */
+  background: radial-gradient(circle at center, #1a1f3c 0%, #020205 100%);
+  position: relative;
+  box-shadow: inset -5px 0 20px rgba(0,0,0,0.5);
+}
+
+/* --- RIGHT SIDE: CHAT INTERFACE --- */
+.chat-interface {
+  width: 450px; 
+  height: 100vh;
+  background-color: #0b0c15;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid #1f293a;
+  z-index: 20;
+}
+
+.chat-header {
+    padding: 20px;
+    background: #111425;
+    border-bottom: 1px solid #1f293a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.online-status {
+    color: #00d2ff;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+}
+
+/* --- HOME SCREEN --- */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center; 
+  height: 100vh;
+  width: 100vw;
+  background: #050510;
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background decorative glow */
+.home-container::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(58, 123, 213, 0.1) 0%, rgba(0,0,0,0) 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+}
+
+.brand-title { 
+    font-size: 5rem; 
+    margin-bottom: 10px; 
+    background: linear-gradient(to right, #00d2ff, #3a7bd5); 
+    -webkit-background-clip: text; 
+    color: transparent; 
+    font-weight: 800;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 1;
+}
+
+.brand-subtitle { 
+    color: #a0aab5; 
+    margin-bottom: 60px; 
+    font-size: 1.2rem; 
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    position: relative;
+    z-index: 1;
+}
+
+/* SELECTION GRIDS */
+.selection-grid {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 50px;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.persona-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 25px;
+  border-radius: 20px;
+  cursor: pointer;
+  width: 160px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(10px);
+}
+
+.persona-card:hover { 
+    transform: translateY(-8px); 
+    background: rgba(255, 255, 255, 0.1); 
+    border-color: #00d2ff;
+}
+
+.persona-card.active { 
+    border-color: #00d2ff; 
+    background: rgba(0, 210, 255, 0.15); 
+    box-shadow: 0 0 30px rgba(0, 210, 255, 0.2); 
+}
+
+.persona-icon { font-size: 3.5rem; margin-bottom: 15px; }
+.persona-label { font-weight: bold; font-size: 1.1rem; margin-bottom: 8px; color: #fff; }
+.persona-desc { font-size: 0.8rem; color: #8fa3b0; }
+
+.mode-buttons { display: flex; gap: 30px; position: relative; z-index: 1; }
+.action-btn {
+  background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+  border: none;
+  padding: 18px 50px;
+  border-radius: 40px;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 10px 30px rgba(0, 210, 255, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.action-btn:hover { transform: scale(1.05); box-shadow: 0 15px 40px rgba(0, 210, 255, 0.5); }
+
+/* --- VIDEO OVERLAYS --- */
+.user-video {
+  position: absolute; top: 30px; right: 30px; width: 180px; height: 240px;
+  background: #000; border-radius: 15px; overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.7); 
+  border: 2px solid rgba(0, 210, 255, 0.3); 
+  z-index: 10;
+}
+.user-video video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+
+/* SUBTITLES */
+.subtitle-overlay {
+  position: absolute; bottom: 180px; left: 50%; transform: translateX(-50%);
+  background: rgba(11, 12, 21, 0.85); color: #fff; padding: 20px 40px;
+  border-radius: 30px; font-size: 1.3rem; max-width: 80%; text-align: center;
+  backdrop-filter: blur(12px); border: 1px solid rgba(0, 210, 255, 0.2); z-index: 15;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* CONTROLS */
+.controls-overlay {
+  position: absolute; bottom: 50px; left: 0; width: 100%;
+  display: flex; flex-direction: column; align-items: center; gap: 20px; z-index: 20;
+}
+
+.status-pill { 
+    background: rgba(0, 210, 255, 0.1); 
+    color: #00d2ff; 
+    padding: 8px 18px; 
+    border-radius: 20px; 
+    font-size: 14px; 
+    backdrop-filter: blur(10px); 
+    border: 1px solid rgba(0, 210, 255, 0.3);
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/*.mic-button { 
+    width: 80px; height: 80px; border-radius: 50%; 
+    background: rgba(255, 255, 255, 0.1); 
+    color: white; font-size: 24px; border: 2px solid rgba(255,255,255,0.2); 
+    cursor: pointer; display: flex; align-items: center; justify-content: center; 
+    transition: 0.3s; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+}
+.mic-button:hover { background: rgba(0, 210, 255, 0.2); border-color: #00d2ff; }
+.mic-button.active { 
+    background: #00d2ff; 
+    box-shadow: 0 0 30px #00d2ff; 
+    border-color: #00d2ff; 
+    animation: pulse 1.5s infinite; 
+}*/
+
+/* =========================================
+   FIX: BULLETPROOF CTA BUTTON (Push to Talk)
+   ========================================= */
+
+.mic-button { 
+    /* Bulletproof Base Requirements */
+    background-color: #0071e3; /* Apple/Standard highly visible blue */
+    color: #ffffff; 
+    border-radius: 25px; /* Pill shaped (18px+) */
+    padding: 14px 28px; /* High-hit-area padding */
+    text-decoration: none; 
+    font-size: 16px; 
+    font-weight: 600;
+    
+    /* Web overrides for native <button> elements */
+    border: none; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 8px; /* Space between the mic emoji and text */
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
+    box-shadow: 0 4px 15px rgba(0, 113, 227, 0.4); 
+}
+
+/* Hover state for better UX */
+.mic-button:hover { 
+    background-color: #005bb5; 
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 113, 227, 0.6); 
+}
+
+.mic-button:disabled {
+    background-color: #555;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Active State (When user is talking) - Shifts to Red */
+.mic-button.active { 
+    background-color: #ff3b30; 
+    box-shadow: 0 0 20px rgba(255, 59, 48, 0.6); 
+    animation: pulse-red 1.5s infinite; 
+}
+
+/* Unique pulse specifically for the red active recording state */
+@keyframes pulse-red { 
+    0% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.7); } 
+    70% { box-shadow: 0 0 0 15px rgba(255, 59, 48, 0); } 
+    100% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0); } 
+}
+
+.back-button { 
+    position: absolute; top: 20px; left: 20px; z-index: 100; 
+    background: rgba(255,255,255,0.05); color: #a0aab5; 
+    padding: 10px 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); 
+    cursor: pointer; backdrop-filter: blur(5px); 
+    transition: 0.2s;
+}
+.back-button:hover { background: rgba(255,255,255,0.1); color: white; }
+
+/* CHAT MESSAGES */
+.messages-list { 
+    flex: 1; overflow-y: auto; padding: 25px; 
+    display: flex; flex-direction: column; gap: 15px; 
+    background: transparent; 
+}
+
+.msg { 
+    padding: 15px 20px; border-radius: 18px; 
+    max-width: 80%; line-height: 1.5; font-size: 0.95rem; 
+}
+.msg.user { 
+    background: linear-gradient(135deg, #3a7bd5, #00d2ff); 
+    color: white; align-self: flex-end; 
+    border-bottom-right-radius: 4px;
+    box-shadow: 0 5px 15px rgba(0, 210, 255, 0.2);
+}
+.msg.mica { 
+    background: #1f293a; color: #e0e6ed; 
+    align-self: flex-start; 
+    border-bottom-left-radius: 4px;
+    border: 1px solid #2d3b55;
+}
+.msg.mica.typing { color: #8fa3b0; font-style: italic; }
+
+.input-area { 
+    padding: 25px; background: #111425; 
+    border-top: 1px solid #1f293a; 
+    display: flex; gap: 15px; 
+}
+
+.input-area input { 
+    flex: 1; padding: 15px 20px; 
+    background: #050510; border: 1px solid #2d3b55; 
+    border-radius: 30px; color: white; outline: none; 
+    transition: border 0.2s;
+}
+.input-area input:focus { border-color: #00d2ff; }
+
+.input-area button { 
+    padding: 0 30px; 
+    background: #00d2ff; color: #050510; 
+    border: none; border-radius: 30px; 
+    cursor: pointer; font-weight: 800; 
+    transition: 0.2s;
+}
+.input-area button:hover { background: #3a7bd5; color: white; }
+
+@keyframes pulse { 
+    0% { box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.7); } 
+    70% { box-shadow: 0 0 0 20px rgba(0, 210, 255, 0); } 
+    100% { box-shadow: 0 0 0 0 rgba(0, 210, 255, 0); } 
+}
+
+/* =========================================
+   NEW: ENGINE TOGGLE SWITCH STYLES 
+   ========================================= */
+.engine-toggle-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px 25px;
+  border-radius: 30px;
+  border: 1px solid rgba(0, 210, 255, 0.2);
+  z-index: 10;
+}
+
+.active-label { 
+    color: #fff; 
+    font-weight: bold; 
+    font-size: 0.9rem; 
+    transition: 0.3s; 
+}
+.inactive-label { 
+    color: #556; 
+    font-size: 0.9rem; 
+    transition: 0.3s; 
+}
+.online-glow { 
+    text-shadow: 0 0 10px rgba(0, 210, 255, 0.8); 
+    color: #00d2ff;
+}
+
+.switch { 
+    position: relative; 
+    display: inline-block; 
+    width: 50px; 
+    height: 26px; 
+}
+.switch input { 
+    opacity: 0; 
+    width: 0; 
+    height: 0; 
+}
+.slider {
+  position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #1f293a; transition: .4s;
+  border: 1px solid rgba(0, 210, 255, 0.5);
+}
+.slider:before {
+  position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 3px;
+  background-color: white; transition: .4s; box-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+input:checked + .slider { background-color: #00d2ff; }
+input:checked + .slider:before { 
+    transform: translateX(24px); 
+    background-color: #050510;
+}
+.slider.round { border-radius: 34px; }
+.slider.round:before { border-radius: 50%; }
+
+/* =========================================
+   PDF EXPORT BUTTONS
+   ========================================= */
+.export-btn {
+    background: rgba(0, 210, 255, 0.1);
+    color: #00d2ff;
+    border: 1px solid rgba(0, 210, 255, 0.4);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    backdrop-filter: blur(5px);
+}
+
+.export-btn:hover {
+    background: #00d2ff;
+    color: #050510;
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
+}
+
+/* Specific positioning for the Video Mode variant */
+.video-export-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+/* Ensure the chat-header in TextMode handles the new button layout smoothly */
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* ... existing properties remain ... */
+}
